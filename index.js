@@ -1,9 +1,18 @@
 const inquirer = require('inquirer');
-// const db = require('./db/connection');
-const Query = require('./lib/functions');
-const cTable = require('console.table');
 
-const questions = () => {
+const { 
+    addDept,
+    addRole,
+    addEmployee} = require('./lib/functions');
+const {
+    viewDept, 
+    viewRoles,
+    viewEmployees,
+} = require('./lib/viewFunctions');
+const {updateEmployee} = require('./lib/updateFunc');
+
+
+function questions () {
     inquirer.prompt ([
         {
         type: 'list',
@@ -15,35 +24,43 @@ const questions = () => {
         'Add a department', 
         'Add a role', 
         'Add an employee', 
-        'Update an employee role']
+        'Update an employee role',
+    'exit']
 
     }
 ]).then (answers => {
-    if (answers.optionQuestions === 'View all departments') {
-      const viewDept = new Query(answers.optionQuestions);
-       return viewDept.viewDept();
-    } else if (answers.optionQuestions === 'View all roles') {
-        const viewRoles = new Query(answers.optionQuestions);
-        return viewRoles.viewRoles();
-    } else if (answers.optionQuestions === 'View all employees') {
-        const viewEmployees = new Query(answers.optionQuestions);
-        return viewEmployees.viewEmployees();
-    } else if (answers.optionQuestions === 'Add a department') {
-        const addDept = new Query(answers.optionQuestions);
-        return addDept.addDept();
-    } else if (answers.optionQuestions === 'Add a role') {
-        const addRole = new Query(answers.optionQuestions);
-        return addRole.addRole();
-    }
-    questions();
-})
-   
-   
+   return init(answers);
+});
 }
 
 
-function init () {
-    questions();
+function init (answers) {
+    switch (answers.optionQuestions) {
+        case 'View all departments':
+           viewDept(questions);
+           break;
+        case 'View all roles':
+            viewRoles(questions);
+            break;
+        case 'View all employees':
+            viewEmployees(questions);
+            break;
+        case 'Add a department':
+            addDept(questions);
+            break;
+        case 'Add a role': 
+            addRole(questions);
+            break;
+        case 'Add an employee':
+            addEmployee(questions);
+            break;
+        case 'Update an employee role':
+            updateEmployee(questions);
+            break;
+        default: 
+        console.log('Goodbye!');
+        
+}
 }
 
-init();
+questions();
