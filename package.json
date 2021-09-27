@@ -19,5 +19,11 @@
   "bugs": {
     "url": "https://github.com/timanlemvo/Employee-Tracker/issues"
   },
-  "homepage": "https://github.com/timanlemvo/Employee-Tracker#readme"
+  "homepage": "https://github.com/timanlemvo/Employee-Tracker#readme",
+  "dependencies": {
+    "console.table": "^0.10.0",
+    "express": "^4.17.1",
+    "inquire": "^0.4.8",
+    "mysql2": "^2.3.0"
+  }
 }
